@@ -1,11 +1,10 @@
 #ifndef RATIONAL
 #define RATIONAL
 #include <iostream>
-class Rational
-{
-public:
+class Rational {
+  public:
     class DivisionByZeroError : public std::runtime_error {
-    public:
+      public:
         DivisionByZeroError(std::string message = "error: division by zero")
             : std::runtime_error(message) {}
     };
@@ -39,12 +38,13 @@ public:
     void SetValues(int num, int denum);
     static int NOD(int a, int b);
     static int NOK(int a, int b);
-    friend std::ostream& operator<<(std::ostream& ostream, const Rational& data);
+    friend std::ostream& operator<<(std::ostream& ostream,
+                                    const Rational& data);
     friend std::istream& operator>>(std::istream& istream, Rational& data);
 
-private:
-    static const char kSeparator{ '/' };
-    int num_{ 0 };
-    int denum_{ 1 };
+  private:
+    static const char kSeparator{'/'};
+    int num_{0};
+    int denum_{1};
 };
 #endif

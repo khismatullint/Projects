@@ -1,17 +1,17 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 
+#include "../doctest/doctest.h"
 #include "rational.h"
 #include <iostream>
-#include "../doctest/doctest.h"
 
-bool testParse(const std::string &s, const Rational &correct) {
+bool testParse(const std::string& s, const Rational& correct) {
     std::istringstream istrm(s);
     Rational n(0);
     istrm >> n;
     return n == correct;
 }
 
-bool testWrite(const Rational &n, const std::string &correct) {
+bool testWrite(const Rational& n, const std::string& correct) {
     std::ostringstream ostrm;
     ostrm << n;
     return ostrm.str() == correct;
@@ -96,7 +96,8 @@ TEST_CASE("Rational Testing") {
         n /= Rational(10, 4);
         CHECK(n == Rational(6, 25));
         CHECK_THROWS_WITH(n /= 0, "error: division by zero");
-        CHECK_THROWS_WITH(Rational(6, 3) /= Rational(0, 1), "error: division by zero");
+        CHECK_THROWS_WITH(Rational(6, 3) /= Rational(0, 1),
+                          "error: division by zero");
         CHECK(n == Rational(6, 25));
     }
 
