@@ -13,6 +13,7 @@ void forwardlist::push(int value) {
     }
     start = elem;
     size++;
+    delete elem;
 }
 
 void forwardlist::pop() {

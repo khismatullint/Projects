@@ -14,6 +14,7 @@ struct forwardlist {
     void push(int value);
     void pop();
     size_t sizet();
+    void insert(int pos, int value);
     int front();
 };
 #endif
