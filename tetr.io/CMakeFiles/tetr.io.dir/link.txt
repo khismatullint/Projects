@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/tetr.io.dir/main.cpp.o -o tetr.io  -lsfml-graphics -lsfml-audio -lsfml-network -lsfml-window -lsfml-system 

@@ -1,0 +1,3 @@
+/home/khismatullint/projects/Projects/tetr.io/CMakeFiles/tetr.io.dir
+/home/khismatullint/projects/Projects/tetr.io/CMakeFiles/edit_cache.dir
+/home/khismatullint/projects/Projects/tetr.io/CMakeFiles/rebuild_cache.dir
