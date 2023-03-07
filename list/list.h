@@ -3,13 +3,13 @@
 #include <iostream>
 struct list {
     struct node {
-        node *next;
-        node *prev;
+        node* next;
+        node* prev;
         int value;
         node(int _value) : next(nullptr), prev(nullptr), value(_value){};
     };
-    node *start;
-    node *last;
+    node* start;
+    node* last;
     size_t size;
     list();
     ~list();
