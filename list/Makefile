@@ -5,6 +5,7 @@ all : list
 
 liblist.a : list.o
 	ar rc liblist.a list.o
+	ranlib liblist.a
 list : liblist.a test.o
 	$(G) $(FLAGS) -o ../build/list test.o -L. -llist
 list.o : list.cpp

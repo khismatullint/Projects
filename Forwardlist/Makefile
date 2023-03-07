@@ -5,6 +5,7 @@ all : forwardlist
 
 libforwardlist.a : forwardlist.o
 	ar rc libforwardlist.a forwardlist.o
+	ranlib libforwardlist.a
 forwardlist : libforwardlist.a test.o
 	$(G) $(FLAGS) -o ../build/forwardlist test.o -L. -lforwardlist
 forwardlist.o : forwardlist.cpp

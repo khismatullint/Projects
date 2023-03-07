@@ -5,6 +5,7 @@ all : rational
 
 librational.a : rational.o
 	ar rc librational.a rational.o
+	ranlib librational.a
 rational : librational.a rational_test.o
 	$(G) $(FLAGS) -o ../build/rational rational_test.o -L. -lrational
 rational.o : rational.cpp

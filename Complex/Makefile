@@ -5,6 +5,7 @@ all : complex
 
 libcomplex.a : complex.o
 	ar rc libcomplex.a complex.o
+	ranlib libcomplex.a
 complex : libcomplex.a complex_test.o
 	$(G) $(FLAGS) -o ../build/complex complex_test.o -L. -lcomplex
 complex.o : complex.cpp

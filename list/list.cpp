@@ -6,12 +6,13 @@ list::~list() {
 }
 void list::push_front(int _val) {
     node *temp = new node(_val);
-    if (size>0) {
+    if (size > 0) {
         temp->next = start;
         start->prev = temp;
     }
-    temp = start;
-    size++;
+    start = temp;
+    if (size==0) last = temp;
+    ++size;
 }
 void list::push_back(int _val) {
     node *temp = new node(_val);
@@ -19,8 +20,9 @@ void list::push_back(int _val) {
         temp->prev = last;
         last->next = temp;
     }
-    temp = last;
-    size++;
+    last = temp;
+    if(size==0) start = temp;
+    ++size;
 }
 void list::pop_front() {
     if (size == 0) return;
@@ -42,8 +44,20 @@ size_t list::sizet() {
     return size;
 }
 void list::insert(int pos, int _val) {
-    if (pos < size && pos >= 0) {
-        if (size / 2 - pos > 0) {
+     if (pos == (int)size) {
+        push_back(_val); 
+        return;
+    }
+    if (pos == -1) {
+        push_front(_val);
+        return;
+    }
+    if (pos < (int)size && pos >= 0) {
+        if (size == 0) {
+            push_front(_val);
+            return;
+        }
+        else if ((int)size / 2 - pos > 0) {
             node *temp = start;
             while (pos > 0) {
                 temp = temp -> next;
@@ -55,80 +69,82 @@ void list::insert(int pos, int _val) {
             next -> prev = elem;
             elem -> prev = temp;
             temp -> next = elem;
+            size++;
+            return;
         }
-        if (size / 2 - pos <= 0) {
+        else if ((int)(size / 2) - pos <= 0) {
             node *temp = last;
-            pos = size - pos;
-            while (pos > 0) {
+            int nth = size - pos;
+            while (nth > 0) {
                 temp = temp->prev;
-                pos--;
+                nth--;
             }
             node *elem = new node(_val);
-            node *prev = temp->prev;
-            elem->prev = prev;
-            prev->next = elem;
-            elem->next = temp;
-            temp->prev = elem;
+            node *next = temp->next;
+            elem -> next = next;
+            next -> prev = elem;
+            elem -> prev = temp;
+            temp -> next = elem;
+            size++;
+            return;
         }
-        size++;
     }
-    else if (pos == size) push_back(_val);
-    else if (pos == -1) push_front(_val);
 }
 void list::erase(int pos) {
-    if (pos < size && pos >= 0) {
-        if (size / 2 - pos > 0) {
+    if (pos < (int)size && pos >= 0 && (int)size > 0) {
+        if ((int)size / 2 - pos > 0) {
             node *temp = start;
             while (pos > 0) {
                 temp = temp->next;
                 pos--;
             }
-            node *deleted = temp->next;
-            node *next = deleted->next;
-            temp -> next = next;
-            next -> prev = temp;
-            delete deleted;
+            node *next = temp -> next;
+            node *prev = temp-> prev;
+            prev->next = next;
+            next->prev= prev;
+            delete temp;
             size--;
         }
-        if (size / 2 - pos <= 0) {
+        if ((int)size / 2 - pos <= 0) {
             pos = size - pos;
             node *temp = last;
             while (pos > 0) {
                 temp = temp -> prev;
                 pos--;
             }
-            node *deleted = temp -> prev;
-            node *prev = deleted->prev;
-            temp->prev = prev;
-            prev->next = temp;
-            delete deleted;
+            node *next = temp -> next;
+            node *prev = temp-> prev;
+            prev->next = next;
+            next->prev= prev;
+            delete temp;
             size--;
         }
     }
-    else if (pos == size) pop_back();
-    else if (pos == -1) pop_front();
+    else if (pos == (int)size && (int)size > 0) pop_back();
+    else if (pos == -1 && size > 0) pop_front();
 }
 int list::getnth(int pos) {
-    int returned;
-    if (pos >= 0 && pos < size) {
-        if (size/2 - pos > 0) {
+    if (size == 0 || pos > (int)size || pos < 0) return -1;
+    else {
+        if (size == 1) return start->value;
+        int count = (int)(size/2);
+        if (count - pos >=0) {
             node *temp = start;
-            while (pos > 0) {
+            while (pos>0) {
                 temp = temp->next;
                 pos--;
             }
-            returned = temp->value;
+            if (temp) return temp->value;
         }
-        if (size/2 - pos <= 0) {
+        else if (count - pos < 0) {
+            int nth = count - pos;
             node *temp = last;
-            pos = size - pos;
-            while (pos > 0) {
+            while (nth > 0) {
                 temp = temp->prev;
-                pos--;
+                nth--;
             }
-            returned = temp->value;
+            if (temp) return temp->value;
         }
     }
-    else returned = -1;
-    return returned;
+    return -2;
 }
