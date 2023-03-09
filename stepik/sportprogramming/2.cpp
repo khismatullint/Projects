@@ -1,71 +1,86 @@
 #include <iostream>
 #include <string>
 using namespace std;
-struct list {
+struct Flist {
     struct node {
-        node* next;
-        node* prev;
         string name;
-        node(string _name) : next(nullptr), prev(nullptr), name(_name){};
+        node* next;
+        node(string _name) : next(nullptr), name(_name){};
     };
-    node *start;
-    node *last;
-    size_t size;
-    list() : start(nullptr), size(0), last(nullptr) {};
-    ~list() {
-        while (size>0) pop_front();
+    int size;
+    node* start;
+    Flist() : size(0), start(nullptr){};
+    ~Flist() {
+        while (size > 0)
+            pop();
     }
-    void push_front(string _name) {
-        node *temp = new node(_name);
+    void pop() {
+        if (size == 0)
+            return;
+        node* tmp = start;
+        start = start->next;
+        --size;
+        delete tmp;
+    }
+    void push(string name) {
+        node* temp = new node(name);
         if (size > 0) {
             temp->next = start;
-            start->prev = temp;
         }
         start = temp;
-        ++size;
+        size++;
     }
-    void push_back(string _name) {
-        node *temp = new node(_name);
-        if (size>0) {
-            temp -> prev = last;
-            last -> next = temp;
-        }
-        last = temp;
-        ++size;
+    string getpos(int pos) {
+        if (pos < size) {
+            node* temp;
+            temp = start;
+            while (pos > 0) {
+                temp = temp->next;
+                pos--;
+            }
+            node* returned = temp;
+            return returned->name;
+        } else
+            return "ERROR";
     }
-    void pop_front() {
-        if (size==0) {
-            return;
-        }
-        node *temp;
-        temp = start;
-        start = start->next;
-        if (start) {
-            start->prev = NULL;
-        }
-        delete temp;
-        size--;
+    void reverse() {
+        node *temp = NULL;
+        node *prev = NULL;
+        node *current = start;
+    while (current != NULL) {
+        temp = current->next;
+        current->next = prev;
+        prev = current;
+        current = temp;
     }
-    void pop_back() {
-        if (size == 0) return;
-        node *temp;
-        temp = last;
-        last = last -> prev;
-        if (last) {
-            last->next = NULL;
-        }
-        delete temp;
-        size--;
-    }
-    string back() {
-        if (size > 0) return last->name;
-        else return "ERROR";
+    start = prev;
     }
     string front() {
-        if (size > 0) return start->name;
-        else return "ERROR";
+        if (size == 0) return "ERROR";
+        return start->name;
     }
 };
 int main() {
-    
+    Flist list;
+    int counter;
+    cin >> counter;
+    string name;
+    while (counter>0) {
+        int menu;
+        cin >> menu;
+        switch (menu) {
+            case 1:
+                cin >> name;
+                list.push(name);
+                break;
+            case 2:
+                cout << list.front() << endl;
+                list.pop();
+                break;
+            case 3:
+                list.reverse();
+                break;
+        }
+        counter--;
+    }
 }
